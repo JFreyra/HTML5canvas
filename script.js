@@ -1,5 +1,15 @@
 console.log("Up and running");
 
+// Helper Function
+
+function getOffset(el) {
+  el = el.getBoundingClientRect();
+  return {
+    left: el.left,
+    top: el.top
+  }
+}
+
 // Slate 1
 
 var slate1 = document.getElementById("slate1");
@@ -11,12 +21,13 @@ slate1Con.beginPath();
 
 var fillSlate1 = function(){
     console.log("doin stuff");
-    var mouseX = event.clientX;
-    var mouseY = event.clientY;
+    var size = 20;
+    var mouseX = event.clientX - getOffset(slate1).left - size/2;
+    var mouseY = event.clientY - getOffset(slate1).top - size/2;
     console.log(mouseX);
     console.log(mouseY);
     slate1Con.fillStyle = "#000000";
-    slate1Con.fillRect(mouseX-20,mouseY-80,20,20);
+    slate1Con.fillRect(mouseX,mouseY,size,size);
 };
 
 var clearSlate = function(e){
@@ -47,12 +58,18 @@ slate2Con.beginPath();
 
 var fillSlate2 = function(){
     console.log("doin stuff");
-    var mouseX = event.clientX;
-    var mouseY = event.clientY;
+    var size = 20;
+    var mouseX = event.clientX - getOffset(slate2).left;
+    var mouseY = event.clientY - getOffset(slate2).top;
+    console.log(mouseX);
+    console.log(mouseY);
     slate2Con.fillStyle = "#000000";
-    slate2Con.fillRect(mouseX-20,mouseY-160,20,20);
     slate2Con.lineTo(mouseX,mouseY);
     slate2Con.stroke();
+    slate2Con.beginPath();
+    slate2Con.arc(mouseX,mouseY,size,0*Math.PI,2*Math.PI);
+    slate2Con.fill();
+    slate2Con.moveTo(mouseX,mouseY);
 };
 
 button2.addEventListener('click',clearSlate);
