@@ -74,3 +74,56 @@ var fillSlate2 = function(){
 
 button2.addEventListener('click',clearSlate);
 slate2.addEventListener('mousedown',fillSlate2);
+
+// Slate 3
+
+var slate3 = document.getElementById("slate3");
+var slate3Con = slate3.getContext("2d");
+
+var button3 = document.getElementById("clear3");
+
+var requestID;
+
+var clicks = 0;
+
+var clear = function(e){
+    e.preventDefault();
+    window.cancelAnimationFrame(requestID);
+    slate3Con.clearRect(0,0,slate3.width,slate3.height);
+};
+
+var animate = function(){
+    
+    //window.cancelAnimationFrame(requestID);
+    clicks++;
+
+    var radius = 50;
+    var xcor = 10;
+
+    var drawDot = function(){
+	console.log(requestID);
+	slate3Con.clearRect(0,0,slate3.width,slate3.height);
+	slate3Con.beginPath();
+	slate3Con.arc(xcor,100,radius,0,2*Math.PI);
+	slate3Con.stroke();
+	slate3Con.fill();
+
+	xcor += clicks;
+	if(xcor == slate3.width){
+	    clear();
+	};
+
+	requestID = window.requestAnimationFrame(drawDot);
+    };
+
+    drawDot();
+    
+};
+
+var stopIt = function(){
+    console.log(requestID);
+    window.cancelAnimationFrame(requestID);
+};
+
+button3.addEventListener('click',clear);
+slate3.addEventListener('mousedown',animate);
